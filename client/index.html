@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Socket client</title>
+</head>
+<body>
+    
+    <script>
+        let socket = new WebSocket("ws:://localhost:3000/");
+        
+        socket.onopen = function (e) {
+            alert('Connection established');
+            console.log(e);
+            socket.send("Hi, what time is it?");
+        };
+
+        socket.onmessage = function(event) {
+            alert('data received');
+            console.log(event);
+        };
+
+        socket.onclose = function(event) {
+            let message = event.wasClean ? 'connection close' : 'connection died';
+            alert(message)
+            console.log(event);
+        };
+
+        socket.onerror = function(error) {
+            alert('ops... error');
+            console.error(error);
+        };
+    </script>
+</body>
+</html>
