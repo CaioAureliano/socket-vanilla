@@ -9,5 +9,6 @@ wss.on('connection', (ws) => {
         console.log(data);
     });
 
-    ws.send('Hello!');
+    setInterval(() => ws.send(new Date().toLocaleString(), 1000));
+    setTimeout(() => ws.close(), 10000);
 });

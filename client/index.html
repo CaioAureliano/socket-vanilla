@@ -2,34 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Socket client</title>
+    <title>Socket Client</title>
 </head>
 <body>
+
+    <div>
+        <h1 id="result"></h1>
+    </div>
     
     <script>
         let socket = new WebSocket("ws://localhost:8080");
         
         socket.onopen = function (e) {
-            alert('Connection established');
-            console.log(e);
-            socket.send("Hi, what time is it?");
+            console.log('Connection established ', e);
         };
 
         socket.onmessage = function(event) {
-            alert('data received');
-            console.log(event);
+            mountResult(event.data);
         };
 
         socket.onclose = function(event) {
-            let message = event.wasClean ? 'connection close' : 'connection died';
-            alert(message)
-            console.log(event);
+            console.warn(event.wasClean ? 'connection close' : 'connection died', event);
+            mountResult('Bye...');
         };
 
         socket.onerror = function(error) {
-            alert('ops... error');
             console.error(error);
         };
+
+        function mountResult(data) {
+            let result = document.querySelector('#result');
+            result.textContent = data;
+        }
     </script>
 </body>
 </html>
